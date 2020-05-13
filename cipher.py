@@ -1,21 +1,25 @@
 import random as rand
 
-ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" # len(alphabet) = 26
+ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"  # len(alphabet) = 26
 NMOD = len(ALPHABET)
+
 
 def stripSpecials(m):
     mes = str()
     for n in m:
-        if n.isalpha() : mes += n.lower()
+        mes += n.lower() if n.isalpha() else ""
     return mes
+
 
 def let2num(listMessage):
     numbers = [ord(listMessage) - 97 for listMessage in listMessage]
     return numbers
 
+
 def num2let(listNumbers):
     letters = [chr(listNumbers + 97) for listNumbers in listNumbers]
     return letters
+
 
 # m = message, privkey = [n, k]. n = modifier, k = times to loop
 def jEncrypt(m, key):
@@ -35,8 +39,9 @@ def jEncrypt(m, key):
         num %= NMOD
         encM.append(num)
     encNumM = num2let(encM)
-    encrypted =  u''.join(map(str, encNumM))
+    encrypted = u''.join(map(str, encNumM))
     return encrypted.upper()
+
 
 def jDecrypt(c, key):
     c = str(c)
@@ -58,9 +63,10 @@ def jDecrypt(c, key):
     decrypted = u''.join(map(str, decNumC))
     return decrypted.lower()
 
+
 if __name__ == "__main__":
     toEncrypt = str(input("Enter what to encrypt: "))
     keyPhrase = str(input("Enter the key phrase: "))
     loopInt = int(input("Enter the looping integer: "))
     res = jEncrypt(toEncrypt, [keyPhrase, loopInt])
-    print (res)
+    print(res)
